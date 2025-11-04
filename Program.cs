@@ -1,5 +1,6 @@
 var builder = WebApplication.CreateBuilder(args);
 
+// Add MVC
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -12,6 +13,8 @@ else
 {
     app.UseExceptionHandler("/Home/Error");
 }
+
+app.UseStaticFiles();
 
 app.UseRouting();
 app.UseAuthorization();
