@@ -1,0 +1,83 @@
+﻿@model List<string>
+
+<div class="container gallery">
+    <div class="row g-1" id="gallery-container">
+        <div class="col-md-4 col-sm-6">
+            @await Html.PartialAsync("_GalleryImagesPartial", Model.Take(4).ToList())
+        </div>
+        <div class="col-md-4 col-sm-6">
+            @await Html.PartialAsync("_GalleryImagesPartial", Model.Skip(4).Take(4).ToList())
+        </div>
+        <div class="col-md-4 col-sm-6">
+            @await Html.PartialAsync("_GalleryImagesPartial", Model.Skip(8).Take(4).ToList())
+        </div>
+    </div>
+</div>
+
+<div class="loading-spinner">
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+
+<script>
+    let page = 1;
+    const loadedPages = new Set();
+    const galleryContainer = document.getElementById('gallery-container');
+    const columns = Array.from(galleryContainer.getElementsByClassName('col-md-4'));
+
+    window.addEventListener('load', function () {
+        document.querySelector('.loading-spinner').style.display = 'none';
+        document.querySelector('.gallery').style.display = 'block';
+        addImageLoadEvent();
+        loadMoreImages();
+    });
+
+    window.addEventListener('scroll', function () {
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+            loadMoreImages();
+        }
+    });
+
+    function loadMoreImages() {
+        if (loadedPages.has(page)) {
+            return; 
+        }
+        loadedPages.add(page);
+
+        fetch(`/Gallery/LoadMoreImages?page=${page}`)
+            .then(response => response.text())
+            .then(data => {
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = data;
+                const newImages = tempDiv.getElementsByClassName('image-container');
+                distributeImages(newImages);
+                addImageLoadEvent();
+                page++;
+            });
+    }
+
+    function distributeImages(images) {
+        let columnIndex = 0;
+        for (let imgContainer of images) {
+            columns[columnIndex].appendChild(imgContainer);
+            columnIndex = (columnIndex + 1) % columns.length;
+        }
+    }
+
+    function addImageLoadEvent() {
+        const images = document.querySelectorAll('.image-container img');
+        images.forEach(img => {
+            if (img.complete) {
+                img.classList.add('loaded');
+            } else {
+                img.addEventListener('load', () => {
+                    requestAnimationFrame(() => {
+                        img.classList.add('loaded');
+                    });
+                });
+            }
+        });
+    }
+</script>

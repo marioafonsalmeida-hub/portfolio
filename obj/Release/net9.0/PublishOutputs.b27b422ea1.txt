@@ -1,0 +1,7 @@
+C:\Users\paulo\projects\Portfolio\bin\Release\net9.0\publish\Portfolio.exe
+C:\Users\paulo\projects\Portfolio\bin\Release\net9.0\publish\appsettings.Development.json
+C:\Users\paulo\projects\Portfolio\bin\Release\net9.0\publish\appsettings.json
+C:\Users\paulo\projects\Portfolio\bin\Release\net9.0\publish\Portfolio.dll
+C:\Users\paulo\projects\Portfolio\bin\Release\net9.0\publish\Portfolio.deps.json
+C:\Users\paulo\projects\Portfolio\bin\Release\net9.0\publish\Portfolio.runtimeconfig.json
+C:\Users\paulo\projects\Portfolio\bin\Release\net9.0\publish\Portfolio.pdb

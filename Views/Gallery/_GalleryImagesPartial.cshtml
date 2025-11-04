@@ -1,0 +1,11 @@
+﻿@model List<string>
+
+@foreach (var image in Model)
+{
+    var imageNameWithoutExtension = System.IO.Path.GetFileNameWithoutExtension(image);
+    <div class="image-container">
+        <img src="~/images/gallery/@image" class="img-fluid p-2 zoom-effect" alt="Gallery Image" loading="lazy"
+            data-src="~/images/gallery/@image" data-name="@imageNameWithoutExtension">
+        <div class="image-name">@imageNameWithoutExtension</div>
+    </div>
+}
